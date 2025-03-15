@@ -1,0 +1,94 @@
+/* General Styling */
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+/* Hero Section */
+.hero {
+    background: url('../images/hero-bg.jpg') no-repeat center center/cover;
+    color: white;
+    text-align: center;
+    padding: 100px 0;
+}
+
+.hero-title {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.hero-subtitle {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.btn-primary {
+    background-color: #e03a3c;
+    border: none;
+    padding: 12px 20px;
+    font-weight: bold;
+}
+
+/* Esports Section */
+.section {
+    padding: 60px 0;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #222;
+}
+
+.section-subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 40px;
+}
+
+/* Esports Cards */
+.esports-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.esports-card img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.register-btn {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #e03a3c;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.register-btn:hover {
+    background-color: #c72e2f;
+}
+
+/* Match Table */
+.table {
+    text-align: center;
+}
+
+.contact-btn {
+    background-color: #e03a3c;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.contact-btn:hover {
+    background-color: #c72e2f;
+}

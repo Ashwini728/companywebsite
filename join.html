@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Us - Stream Sync</title>
+    <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Stream Sync</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link btn btn-primary text-white px-4" href="join.html">Join Us</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Join Us Section -->
+    <section id="join-us" class="join-us section">
+        <div class="container section-title" data-aos="fade-up">
+            <h2>Join Our Team</h2>
+            <p>Explore exciting career opportunities at Stream Sync. Apply for a specific job or submit a general application.</p>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <!-- Job Listings -->
+                <div class="col-lg-7">
+                    <h3>Current Job Openings</h3>
+                    <div id="job-list" class="job-list">
+                        <!-- Jobs will be loaded dynamically here -->
+                    </div>
+                </div>
+
+                <!-- General Application Form -->
+                <div class="col-lg-5">
+                    <h3>General Application</h3>
+                    <form id="generalApplicationForm">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Full Name</label>
+                            <input type="text" id="name" class="form-control" placeholder="Enter your name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="resume" class="form-label">Upload Resume</label>
+                            <input type="file" id="resume" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Submit Application</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Admin Job Posting Form -->
+            <div class="row mt-5" id="admin-panel" style="display: none;">
+                <div class="col-lg-8 mx-auto">
+                    <h3>Post a New Job</h3>
+                    <form id="jobPostForm">
+                        <div class="mb-3">
+                            <label for="jobTitle" class="form-label">Job Title</label>
+                            <input type="text" id="jobTitle" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="jobDescription" class="form-label">Job Description</label>
+                            <textarea id="jobDescription" class="form-control" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Post Job</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -2628,3 +2628,215 @@ section,
   color: color-mix(in srgb, var(--default-color), transparent 60%);
   font-size: 14px;
 }
+/* Join Us Section */
+.join-us {
+  background-color: var(--surface-color);
+  padding: 60px 0;
+  text-align: center;
+}
+
+.join-us h2 {
+  color: var(--default-color);
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.join-us p {
+  color: color-mix(in srgb, var(--default-color), transparent 20%);
+  font-size: 16px;
+}
+
+.job-list {
+  margin-top: 20px;
+}
+
+.job-card {
+  background-color: var(--surface-color);
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
+}
+
+.job-card:hover {
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+}
+
+.job-card h4 {
+  font-size: 18px;
+  color: var(--default-color);
+  font-weight: bold;
+}
+
+.job-card p {
+  font-size: 14px;
+  color: color-mix(in srgb, var(--default-color), transparent 30%);
+}
+
+.apply-btn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 15px;
+  font-size: 14px;
+  background-color: var(--accent-color);
+  color: var(--contrast-color);
+  border-radius: 5px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.apply-btn:hover {
+  background-color: color-mix(in srgb, var(--accent-color), transparent 20%);
+}
+/* -------------------------------- */
+/* 🎨 Join Us Page Styles */
+/* -------------------------------- */
+
+.join-us {
+  background-color: var(--surface-color);
+  padding: 60px 0;
+  text-align: center;
+}
+
+.join-us h2 {
+  color: var(--default-color);
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.join-us p {
+  color: color-mix(in srgb, var(--default-color), transparent 20%);
+  font-size: 16px;
+}
+
+/* Job Listings */
+.job-list {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.job-card {
+  background-color: var(--surface-color);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
+  text-align: left;
+}
+
+.job-card:hover {
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+}
+
+.job-card h4 {
+  font-size: 18px;
+  color: var(--default-color);
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.job-card p {
+  font-size: 14px;
+  color: color-mix(in srgb, var(--default-color), transparent 30%);
+  margin-bottom: 10px;
+}
+
+/* Apply Button */
+.apply-btn {
+  display: inline-block;
+  padding: 8px 15px;
+  font-size: 14px;
+  background-color: var(--accent-color);
+  color: var(--contrast-color);
+  border-radius: 5px;
+  text-decoration: none;
+  transition: 0.3s;
+  border: none;
+}
+
+.apply-btn:hover {
+  background-color: color-mix(in srgb, var(--accent-color), transparent 20%);
+}
+
+/* General Application Form */
+#generalApplicationForm {
+  background: var(--surface-color);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+#generalApplicationForm h3 {
+  font-size: 20px;
+  color: var(--default-color);
+  margin-bottom: 15px;
+}
+
+#generalApplicationForm .form-control {
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 50%);
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 14px;
+}
+
+#generalApplicationForm button {
+  background-color: var(--accent-color);
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  color: var(--contrast-color);
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+#generalApplicationForm button:hover {
+  background-color: color-mix(in srgb, var(--accent-color), transparent 20%);
+}
+
+/* Admin Job Posting Form */
+#admin-panel {
+  background: var(--surface-color);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  display: none; /* Hidden unless user is an admin */
+}
+
+#admin-panel h3 {
+  font-size: 22px;
+  color: var(--default-color);
+  margin-bottom: 10px;
+}
+
+#jobPostForm .form-control {
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 50%);
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 14px;
+}
+
+#jobPostForm button {
+  background-color: var(--accent-color);
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  color: var(--contrast-color);
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+#jobPostForm button:hover {
+  background-color: color-mix(in srgb, var(--accent-color), transparent 20%);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .job-list {
+      flex-direction: column;
+  }
+}

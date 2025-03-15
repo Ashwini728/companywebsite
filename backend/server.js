@@ -4,16 +4,115 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
 
 dotenv.config();
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use('/uploads', express.static('uploads'));
 
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("✅ MongoDB Connected"))
-  .catch(err => console.log("❌ MongoDB Connection Failed:", err));
+mongoose.connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    tlsAllowInvalidCertificates: true // ✅ Fixes SSL issue
+})
+.then(() => console.log("✅ MongoDB Connected"))
+.catch(err => console.log("❌ MongoDB Connection Failed:", err));
 
+  const JobSchema = new mongoose.Schema({
+    title: String,
+    description: String,
+});
+
+const Job = mongoose.model('Job', JobSchema);
+
+// Applicant Schema
+const ApplicantSchema = new mongoose.Schema({
+    name: String,
+    email: String,
+    resume: String, // Path to uploaded file
+    appliedFor: { type: String, default: "General" }
+});
+
+const Applicant = mongoose.model('Applicant', ApplicantSchema);
+
+// Multer Storage for Resumes
+const storage = multer.diskStorage({
+    destination: 'uploads/',
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + path.extname(file.originalname));
+    }
+});
+
+const upload = multer({ storage });
+
+// **API to Get All Jobs**
+app.get('/jobs', async (req, res) => {
+    try {
+        const jobs = await Job.find();
+        res.json(jobs);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch jobs" });
+    }
+});
+
+// **API to Add a New Job (Admin)**
+app.post('/jobs', async (req, res) => {
+    const { title, description } = req.body;
+
+    try {
+        const newJob = new Job({ title, description });
+        await newJob.save();
+        res.json({ message: "Job posted successfully!" });
+    } catch (error) {
+        res.status(500).json({ error: "Failed to post job" });
+    }
+});
+
+// **API for General Job Applications**
+app.post('/apply', upload.single('resume'), async (req, res) => {
+    const { name, email } = req.body;
+    const resumePath = req.file ? `/uploads/${req.file.filename}` : null;
+
+    try {
+        const newApplicant = new Applicant({ name, email, resume: resumePath });
+        await newApplicant.save();
+        res.json({ message: "Application submitted successfully!" });
+    } catch (error) {
+        res.status(500).json({ error: "Failed to submit application" });
+    }
+});
+
+// **API for Applying to Specific Jobs**
+app.post('/apply/:jobId', upload.single('resume'), async (req, res) => {
+    const { name, email } = req.body;
+    const { jobId } = req.params;
+    const resumePath = req.file ? `/uploads/${req.file.filename}` : null;
+
+    try {
+        const job = await Job.findById(jobId);
+        if (!job) return res.status(404).json({ error: "Job not found" });
+
+        const newApplicant = new Applicant({ name, email, resume: resumePath, appliedFor: job.title });
+        await newApplicant.save();
+        res.json({ message: `Applied for ${job.title} successfully!` });
+    } catch (error) {
+        res.status(500).json({ error: "Failed to apply for job" });
+    }
+});
+
+// **API to Get All Applicants (For Admin)**
+app.get('/applicants', async (req, res) => {
+    try {
+        const applicants = await Applicant.find();
+        res.json(applicants);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch applicants" });
+    }
+});
 // User Schema
 const UserSchema = new mongoose.Schema({
     username: String,

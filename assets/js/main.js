@@ -1,10 +1,3 @@
-/**
-* Template Name: Presento
-* Template URL: https://bootstrapmade.com/presento-bootstrap-corporate-template/
-* Updated: Aug 07 2024 with Bootstrap v5.3.3
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
 
 (function() {
   "use strict";
@@ -155,6 +148,163 @@
     });
 
   });
+  // Sample Job Listings
+const jobs = [
+    { title: "Digital Marketing Manager", description: "Manage digital campaigns and SEO strategies." },
+    { title: "Graphic Designer", description: "Create engaging visuals and branding materials." },
+    { title: "Video Editor", description: "Edit and enhance videos for media production." }
+];
+
+// Function to Load Jobs
+function loadJobs() {
+    const jobList = document.getElementById("job-list");
+    jobs.forEach(job => {
+        const jobCard = document.createElement("div");
+        jobCard.classList.add("job-card");
+        jobCard.innerHTML = `
+            <h4>${job.title}</h4>
+            <p>${job.description}</p>
+            <a href="apply.html" class="apply-btn">Apply Now</a>
+        `;
+        jobList.appendChild(jobCard);
+    });
+}
+
+// Load jobs when page loads
+document.addEventListener("DOMContentLoaded", loadJobs);
+
+// Handle General Application Form Submission
+document.querySelector("#generalApplicationForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    alert("Application submitted successfully!");
+    document.querySelector("#generalApplicationForm").reset();
+});
+
+
+// Fetch job listings from backend
+async function loadJobs() {
+  const jobList = document.getElementById("job-list");
+  jobList.innerHTML = "";
+
+  const response = await fetch("http://localhost:4000/jobs");
+  const jobs = await response.json();
+
+  jobs.forEach(job => {
+      const jobCard = document.createElement("div");
+      jobCard.classList.add("job-card");
+      jobCard.innerHTML = `
+          <h4>${job.title}</h4>
+          <p>${job.description}</p>
+          <a href="#" class="apply-btn" onclick="applyJob('${job._id}')">Apply Now</a>
+      `;
+      jobList.appendChild(jobCard);
+  });
+}
+// Function to Load Jobs from Backend
+async function loadJobs() {
+  const jobList = document.getElementById("job-list");
+  jobList.innerHTML = "";
+
+  const response = await fetch("http://localhost:4000/jobs");
+  const jobs = await response.json();
+
+  jobs.forEach(job => {
+      const jobCard = document.createElement("div");
+      jobCard.classList.add("job-card");
+      jobCard.innerHTML = `
+          <h4>${job.title}</h4>
+          <p>${job.description}</p>
+          <a href="#" class="apply-btn" onclick="applyJob('${job._id}')">Apply Now</a>
+      `;
+      jobList.appendChild(jobCard);
+  });
+}
+
+// Function to Post a New Job (Admin Only)
+document.querySelector("#jobPostForm")?.addEventListener("submit", async function (e) {
+  e.preventDefault();
+
+  const jobData = {
+      title: document.querySelector("#jobTitle").value,
+      description: document.querySelector("#jobDescription").value
+  };
+
+  const response = await fetch("http://localhost:4000/jobs", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(jobData)
+  });
+
+  const result = await response.json();
+  alert(result.message);
+  document.querySelector("#jobPostForm").reset();
+  loadJobs(); // Refresh job listings
+});
+
+// Function to Show Admin Panel if Logged in as Admin
+function checkAdmin() {
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  console.log("Checking Admin Role:", user);  // Debugging line
+
+  if (user && user.role === "admin") {
+      document.getElementById("admin-panel").style.display = "block";
+  }
+}
+
+
+// Load Jobs and Check Admin on Page Load
+document.addEventListener("DOMContentLoaded", () => {
+  loadJobs();
+  checkAdmin();
+});
+
+// Apply for a specific job
+async function applyJob(jobId) {
+  const name = prompt("Enter your name:");
+  const email = prompt("Enter your email:");
+  const resumeFile = document.createElement("input");
+  resumeFile.type = "file";
+
+  resumeFile.addEventListener("change", async function () {
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("email", email);
+      formData.append("resume", resumeFile.files[0]);
+
+      const response = await fetch(`http://localhost:4000/apply/${jobId}`, {
+          method: "POST",
+          body: formData
+      });
+
+      const result = await response.json();
+      alert(result.message);
+  });
+
+  resumeFile.click();
+}
+
+// Handle General Application Form
+document.querySelector("#generalApplicationForm").addEventListener("submit", async function (e) {
+  e.preventDefault();
+
+  const formData = new FormData();
+  formData.append("name", document.querySelector("#name").value);
+  formData.append("email", document.querySelector("#email").value);
+  formData.append("resume", document.querySelector("#resume").files[0]);
+
+  const response = await fetch("http://localhost:4000/apply", {
+      method: "POST",
+      body: formData
+  });
+
+  const result = await response.json();
+  alert(result.message);
+  document.querySelector("#generalApplicationForm").reset();
+});
+
+// Load jobs when the page loads
+document.addEventListener("DOMContentLoaded", loadJobs);
 
   /**
    * Frequently Asked Questions Toggle
