@@ -1761,36 +1761,31 @@ section,
 
 .contact .php-email-form input[type=text],
 .contact .php-email-form input[type=email],
-.contact .php-email-form textarea {
-  font-size: 14px;
-  padding: 10px 15px;
-  box-shadow: none;
-  border-radius: 0;
-  color: var(--default-color);
-  background-color: var(--surface-color);
-  border-color: color-mix(in srgb, var(--default-color), transparent 80%);
+.contact .php-email-form input[type=tel] {  /* Force Apply Styles */
+  font-size: 14px !important;
+  padding: 10px 15px !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  color: var(--default-color) !important;
+  background-color: var(--surface-color) !important;
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 80%) !important;
 }
 
+/* Add Focus Effect */
 .contact .php-email-form input[type=text]:focus,
 .contact .php-email-form input[type=email]:focus,
-.contact .php-email-form textarea:focus {
-  border-color: var(--accent-color);
+.contact .php-email-form input[type=tel]:focus {  /* Ensure Phone Field Focus Works */
+  border-color: var(--accent-color) !important;
+  outline: none !important;
 }
 
+/* Fix Placeholder Styling */
 .contact .php-email-form input[type=text]::placeholder,
 .contact .php-email-form input[type=email]::placeholder,
-.contact .php-email-form textarea::placeholder {
-  color: color-mix(in srgb, var(--default-color), transparent 70%);
+.contact .php-email-form input[type=tel]::placeholder {
+  color: color-mix(in srgb, var(--default-color), transparent 70%) !important;
 }
 
-.contact .php-email-form button[type=submit] {
-  color: var(--contrast-color);
-  background: var(--accent-color);
-  border: 0;
-  padding: 10px 30px;
-  transition: 0.4s;
-  border-radius: 50px;
-}
 
 .contact .php-email-form button[type=submit]:hover {
   background: color-mix(in srgb, var(--accent-color), transparent 20%);
