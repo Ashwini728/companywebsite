@@ -1,0 +1,99 @@
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+/* Dark Mode Variables */
+:root {
+    --bg-color: #121212;
+    --card-bg: #1e1e1e;
+    --text-color: #ffffff;
+    --primary-color: #e03a3c;
+}
+
+/* Global Styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+}
+
+/* Centering Register Box */
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
+
+.register-box {
+    background: var(--card-bg);
+    padding: 2rem 3rem;
+    border-radius: 12px;
+    width: 550px;
+    text-align: center;
+    box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.1);
+}
+
+.register-box h2 {
+    margin-bottom: 8px;
+}
+
+.register-box p {
+    font-size: 14px;
+    color: #aaa;
+}
+
+/* Input Fields */
+.input-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    background: #333;
+    color: #fff;
+}
+
+/* Register Button */
+.btn-register {
+    width: 100%;
+    padding: 10px;
+    background: var(--primary-color);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-register:hover {
+    background: #c42d2f;
+}
+
+/* Login Link */
+.login-text {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.login-text a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.login-text a:hover {
+    text-decoration: underline;
+}
