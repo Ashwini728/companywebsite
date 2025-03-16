@@ -1,16 +1,30 @@
-/**
-* Template Name: Presento
-* Template URL: https://bootstrapmade.com/presento-bootstrap-corporate-template/
-* Updated: Aug 07 2024 with Bootstrap v5.3.3
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
+/* Fix Overflow for Entire Website */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-/*--------------------------------------------------------------
-# Font & Color Variables
-# Help: https://bootstrapmade.com/color-system/
---------------------------------------------------------------*/
-/* Fonts */
+html, body {
+  overflow-x: hidden; /* Removes horizontal scroll */
+  scroll-behavior: smooth; /* Smooth scrolling */
+}
+
+section {
+  max-width: 100%; /* Prevents any section from exceeding viewport width */
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+
 :root {
   --default-font: "Roboto",  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --heading-font: "Raleway",  sans-serif;
