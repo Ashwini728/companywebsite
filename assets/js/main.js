@@ -251,6 +251,44 @@ function checkAdmin() {
       document.getElementById("admin-panel").style.display = "block";
   }
 }
+document.addEventListener("DOMContentLoaded", function () {
+  const contactForm = document.getElementById("contactForm");
+
+  if (contactForm) {
+      contactForm.addEventListener("submit", async function (e) {
+          e.preventDefault(); // Prevents page reload
+
+          const formData = {
+              name: document.getElementById("name").value.trim(),
+              email: document.getElementById("email").value.trim(),
+              phone: document.getElementById("phone").value.trim(),
+              message: document.getElementById("message").value.trim()
+          };
+
+          try {
+              const response = await fetch("http://localhost:4000/contact", {
+                  method: "POST",
+                  headers: { 
+                      "Content-Type": "application/json"  // ✅ Ensures JSON format
+                  },
+                  body: JSON.stringify(formData) // ✅ Converts form data to JSON
+              });
+
+              const result = await response.json();
+              if (response.ok) {
+                  alert(result.message); // Show success message
+                  contactForm.reset(); // Clear form
+              } else {
+                  alert("Error: " + result.message); // Show backend error
+              }
+          } catch (error) {
+              alert("Something went wrong! Please try again.");
+          }
+      });
+  } else {
+      console.error("❌ Contact form not found in index.html");
+  }
+});
 
 
 // Load Jobs and Check Admin on Page Load

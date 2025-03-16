@@ -13,7 +13,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static('uploads'));
-
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -144,7 +143,68 @@ app.post('/register', async (req, res) => {
         res.status(500).json({ message: "Server error" });
     }
 });
+// Contact Schema
+mongoose.connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => console.log("✅ MongoDB Connected"))
+  .catch(err => console.log("❌ MongoDB Connection Failed:", err));
 
+// Contact Schema
+const contactSchema = new mongoose.Schema({
+    name: String,
+    email: String,
+    phone: String,
+    message: String,
+    date: { type: Date, default: Date.now }
+});
+
+const Contact = mongoose.model("Contact", contactSchema);
+
+// ✅ Fix Backend Route
+app.post("/contact", async (req, res) => {
+    console.log("📩 Received Contact Request:", req.body); // Debugging line
+
+    const { name, email, phone, message } = req.body;
+
+    if (!name || !email || !phone || !message) {
+        return res.status(400).json({ message: "All fields are required" });
+    }
+
+    try {
+        const newContact = new Contact({ name, email, phone, message });
+        await newContact.save();
+        res.status(200).json({ message: "Message sent successfully!" });
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error });
+    }
+});
+
+// Function to Send Email Notification (Optional)
+function sendEmailNotification(name, email, phone, message) {
+    const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS
+        }
+    });
+
+    const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: "your-email@example.com",
+        subject: "New Contact Form Submission",
+        text: `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nMessage: ${message}`
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.log("❌ Email not sent:", error);
+        } else {
+            console.log("📧 Email sent:", info.response);
+        }
+    });
+}
 // **Login API**
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
