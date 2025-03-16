@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
@@ -7,17 +8,32 @@ const jwt = require('jsonwebtoken');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const bodyParser = require('body-parser');
+const connectDB = require('./config/db');
+const esportsRoutes = require('./routes/esportsRoutes');
+const Event = require('./models/Event');
+const Match = require('./models/Match');
+
+
+
 
 dotenv.config();
 const app = express();
 app.use(cors());
+app.use(bodyParser.json());
 app.use(express.json());
 app.use('/uploads', express.static('uploads'));
+
+connectDB();
+
+app.use('/api', esportsRoutes);
+
+
 
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    tlsAllowInvalidCertificates: true // ✅ Fixes SSL issue
+    tlsAllowInvalidCertificates: true 
 })
 .then(() => console.log("✅ MongoDB Connected"))
 .catch(err => console.log("❌ MongoDB Connection Failed:", err));
@@ -165,3 +181,4 @@ app.post('/login', async (req, res) => {
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+
