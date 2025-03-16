@@ -7,15 +7,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const multer = require('multer');
 const path = require('path');
-const fs = require('fs');
-const bodyParser = require('body-parser');
-const connectDB = require('./config/db');
-const esportsRoutes = require('./routes/esportsRoutes');
-const Event = require('./models/Event');
-const Match = require('./models/Match');
-
-
-
 
 dotenv.config();
 const app = express();
@@ -38,34 +29,50 @@ mongoose.connect(process.env.MONGO_URI, {
 .then(() => console.log("✅ MongoDB Connected"))
 .catch(err => console.log("❌ MongoDB Connection Failed:", err));
 
-  const JobSchema = new mongoose.Schema({
+// **Job Schema**
+const JobSchema = new mongoose.Schema({
     title: String,
     description: String,
 });
-
 const Job = mongoose.model('Job', JobSchema);
 
-// Applicant Schema
+// **Applicant Schema**
 const ApplicantSchema = new mongoose.Schema({
     name: String,
     email: String,
-    resume: String, // Path to uploaded file
+    resume: String,
     appliedFor: { type: String, default: "General" }
 });
-
 const Applicant = mongoose.model('Applicant', ApplicantSchema);
 
-// Multer Storage for Resumes
+// **Multer for File Uploads**
 const storage = multer.diskStorage({
     destination: 'uploads/',
     filename: (req, file, cb) => {
         cb(null, Date.now() + path.extname(file.originalname));
     }
 });
-
 const upload = multer({ storage });
 
-// **API to Get All Jobs**
+// **User Schema**
+const UserSchema = new mongoose.Schema({
+    username: String,
+    email: String,
+    password: String
+});
+const User = mongoose.model('User', UserSchema);
+
+// **Contact Schema** ✅ NEW
+const ContactSchema = new mongoose.Schema({
+    name: String,
+    email: String,
+    phone: String,
+    message: String,
+    date: { type: Date, default: Date.now }
+});
+const Contact = mongoose.model('Contact', ContactSchema);
+
+// **GET All Jobs**
 app.get('/jobs', async (req, res) => {
     try {
         const jobs = await Job.find();
@@ -75,10 +82,9 @@ app.get('/jobs', async (req, res) => {
     }
 });
 
-// **API to Add a New Job (Admin)**
+// **POST a New Job**
 app.post('/jobs', async (req, res) => {
     const { title, description } = req.body;
-
     try {
         const newJob = new Job({ title, description });
         await newJob.save();
@@ -88,11 +94,10 @@ app.post('/jobs', async (req, res) => {
     }
 });
 
-// **API for General Job Applications**
+// **POST General Job Application**
 app.post('/apply', upload.single('resume'), async (req, res) => {
     const { name, email } = req.body;
     const resumePath = req.file ? `/uploads/${req.file.filename}` : null;
-
     try {
         const newApplicant = new Applicant({ name, email, resume: resumePath });
         await newApplicant.save();
@@ -102,12 +107,11 @@ app.post('/apply', upload.single('resume'), async (req, res) => {
     }
 });
 
-// **API for Applying to Specific Jobs**
+// **POST Apply for Specific Job**
 app.post('/apply/:jobId', upload.single('resume'), async (req, res) => {
     const { name, email } = req.body;
     const { jobId } = req.params;
     const resumePath = req.file ? `/uploads/${req.file.filename}` : null;
-
     try {
         const job = await Job.findById(jobId);
         if (!job) return res.status(404).json({ error: "Job not found" });
@@ -120,7 +124,7 @@ app.post('/apply/:jobId', upload.single('resume'), async (req, res) => {
     }
 });
 
-// **API to Get All Applicants (For Admin)**
+// **GET All Applicants (Admin)**
 app.get('/applicants', async (req, res) => {
     try {
         const applicants = await Applicant.find();
@@ -129,29 +133,17 @@ app.get('/applicants', async (req, res) => {
         res.status(500).json({ error: "Failed to fetch applicants" });
     }
 });
-// User Schema
-const UserSchema = new mongoose.Schema({
-    username: String,
-    email: String,
-    password: String
-});
-
-const User = mongoose.model('User', UserSchema);
 
 // **Register API**
 app.post('/register', async (req, res) => {
     const { username, email, password } = req.body;
-
     try {
-        // Check if user exists
         let user = await User.findOne({ email });
         if (user) return res.status(400).json({ message: "User already exists" });
 
-        // Hash the password
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        // Create new user
         user = new User({ username, email, password: hashedPassword });
         await user.save();
 
@@ -164,7 +156,6 @@ app.post('/register', async (req, res) => {
 // **Login API**
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
-
     try {
         const user = await User.findOne({ email });
         if (!user) return res.status(400).json({ message: "User not found" });
@@ -176,6 +167,33 @@ app.post('/login', async (req, res) => {
         res.json({ token, message: "Login successful!" });
     } catch (error) {
         res.status(500).json({ message: "Server error" });
+    }
+});
+
+// **✅ Contact Form API**
+app.post('/contact', async (req, res) => {
+    const { name, email, phone, message } = req.body;
+    
+    if (!name || !email || !phone || !message) {
+        return res.status(400).json({ error: "All fields are required!" });
+    }
+
+    try {
+        const newContact = new Contact({ name, email, phone, message });
+        await newContact.save();
+        res.json({ message: "Message sent successfully!" });
+    } catch (error) {
+        res.status(500).json({ error: "Failed to send message" });
+    }
+});
+
+// **GET All Contact Messages (For Admin)**
+app.get('/contacts', async (req, res) => {
+    try {
+        const contacts = await Contact.find();
+        res.json(contacts);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch messages" });
     }
 });
 
