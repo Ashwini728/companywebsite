@@ -3,7 +3,7 @@
 Welcome to **Stream Sync**, a professional website for a fictional company specializing in **live streaming, media production, digital marketing, event management, and esports services**.
 
 ---
-## 🚀 Features
+##  Features
 
 ### 🔹 Home Page
 - Attractive landing page with a tagline and a brief mission statement.
@@ -87,7 +87,7 @@ StreamSync/
 │   │   ├── images/
 │-- README.md
 ```
-## 🏆 Credits
+##  Credits
 Developed by **Ashwini Anil,Anjitha Anil,Eunice Freeda T** for **LUMINO 25: Web Canvas Hackathon** at **Saintgits College of Engineering**.
 
 
