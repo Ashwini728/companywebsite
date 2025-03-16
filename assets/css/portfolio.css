@@ -1,0 +1,66 @@
+/* General Page Styling */
+body {
+    background-color: #121212;
+    color: #ffffff;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+/* Container */
+.container {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.2);
+}
+
+/* Media Container */
+.media-container {
+    margin-bottom: 20px;
+}
+
+.media {
+    width: 100%;
+    max-height: 400px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.2);
+}
+
+/* Title */
+h3 {
+    color: #e63946;
+    font-size: 24px;
+}
+
+/* Project Details */
+ul {
+    list-style: none;
+    padding: 0;
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+ul li {
+    margin: 8px 0;
+}
+
+/* Back Button */
+.btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #e63946;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: 0.3s;
+    font-weight: bold;
+}
+
+.btn:hover {
+    background: #ff4c5b;
+}
