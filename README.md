@@ -90,6 +90,10 @@ StreamSync/
 ##  Credits
 Developed by **Ashwini Anil,Anjitha Anil,Eunice Freeda T** for **LUMINO 25: Web Canvas Hackathon** at **Saintgits College of Engineering**.
 
+## Demo
+[Click here](https://ashwini728.github.io/streamsync/)
+
+
 
 
 
